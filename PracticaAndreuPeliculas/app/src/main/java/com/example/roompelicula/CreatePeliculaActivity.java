@@ -1,6 +1,7 @@
 package com.example.roompelicula;
 
 //import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +10,11 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.roompelicula.controller.PeliculaController;
-import com.example.roompelicula.R;
 import com.example.roompelicula.model.Pelicula;
 
 public class CreatePeliculaActivity extends AppCompatActivity {
 
-    EditText et_titol, et_descripcio, et_any, et_puntuacio , et_imatge;
+    EditText et_titol, et_descripcio, et_any, et_puntuacio, et_imatge;
     PeliculaController controller;
     Pelicula pelicula;
     String id;
@@ -60,6 +60,7 @@ public class CreatePeliculaActivity extends AppCompatActivity {
         String imatge = et_imatge.getText().toString();
         String any = et_any.getText().toString();
         String puntuacio = et_puntuacio.getText().toString();
+        String errPuntuation5 = et_puntuacio.getText().toString();
 
         //comprovar buits
         if (checkFields(titol, descripcio, any, puntuacio, imatge)) {
@@ -99,6 +100,13 @@ public class CreatePeliculaActivity extends AppCompatActivity {
         if ("".equals(puntuacio)) {
             et_puntuacio.setError("Puntuación no puede ser vacío");
             valid = false;
+
+        } else {
+            int puntos = Integer.parseInt(puntuacio);
+            if (puntos > 5 || puntos < 0) {
+                et_puntuacio.setError("\"Puntuación ha de ser menor a 6");
+                valid = false;
+            }
         }
         if ("".equals(imatge)) {
             et_imatge.setError("Imagen no puede ser vacío");
@@ -106,4 +114,4 @@ public class CreatePeliculaActivity extends AppCompatActivity {
         }
         return valid;
     }
-}
+    }

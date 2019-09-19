@@ -4,6 +4,7 @@ import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.roompelicula.controller.PeliculaController;
 import com.example.roompelicula.R;
 import com.example.roompelicula.model.Pelicula;
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -18,6 +20,7 @@ public class DetailActivity extends AppCompatActivity {
     Pelicula pelicula;
 
     TextView tv_id, tv_titol, tv_descripcio, tv_any, tv_puntuacio, tv_imatge;
+    ImageView image_view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +28,10 @@ public class DetailActivity extends AppCompatActivity {
         /*Recollir l'id de la pelicula seleccionada a la llista*/
         String id = getIntent().getStringExtra("idPelicula");
 
-        /*Agafem la persona de la base de dades SQLite per ID*/
+        /*Agafem la pelicula de la base de dades SQLite per ID*/
         controller = PeliculaController.get(this);
         pelicula = controller.getPelicula(id);
+         image_view = findViewById(R.id.image_view);
 
         /*Inicialitzar els TextView*/
         tv_id = findViewById(R.id.tv_id);
@@ -52,6 +56,8 @@ public class DetailActivity extends AppCompatActivity {
         tv_imatge.setText(pelicula.getImatge());
         tv_any.setText(String.valueOf(pelicula.getAny()));
         tv_puntuacio.setText(String.valueOf(pelicula.getPuntuacio()));
+        Picasso.get().load(pelicula.getImatge())
+                .into(image_view);
     }
 
     public void deletePressed(View view) {
